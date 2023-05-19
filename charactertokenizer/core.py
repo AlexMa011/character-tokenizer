@@ -82,7 +82,7 @@ class CharacterTokenizer(PreTrainedTokenizer):
         return list(text)
 
     def _convert_token_to_id(self, token: str) -> int:
-        return self._vocab_str_to_int.get(token, self._vocab_str_to_int["[UNK]"])
+        return self._vocab_str_to_int.get(token, self._vocab_str_to_int[unk_token_str])
 
     def _convert_id_to_token(self, index: int) -> str:
         return self._vocab_int_to_str[index]
