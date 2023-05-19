@@ -30,16 +30,24 @@ class CharacterTokenizer(PreTrainedTokenizer):
 
             model_max_length (int): Model maximum sequence length.
         """
-        self.characters = characters
+                self.characters = characters
         self.model_max_length = model_max_length
-        bos_token = AddedToken("[BOS]", lstrip=False, rstrip=False)
-        eos_token = AddedToken("[SEP]", lstrip=False, rstrip=False)
-        sep_token = AddedToken("[SEP]", lstrip=False, rstrip=False)
-        cls_token = AddedToken("[CLS]", lstrip=False, rstrip=False)
-        pad_token = AddedToken("[PAD]", lstrip=False, rstrip=False)
-        unk_token = AddedToken("[UNK]", lstrip=False, rstrip=False)
+        bos_token_str = u'\ue000'
+        eos_token_str = u'\ue001'
+        sep_token_str = u'\ue004'
+        cls_token_str = u'\ue005'
+        pad_token_str = u'\x00'
+        mask_token_str = u'\ue003'
+        unk_token_str = u'\ue002'
+        self.mask_token_str = mask_token_str
+        bos_token = AddedToken(bos_token_str, lstrip=False, rstrip=False)
+        eos_token = AddedToken(eos_token_str, lstrip=False, rstrip=False)
+        sep_token = AddedToken(sep_token_str, lstrip=False, rstrip=False)
+        cls_token = AddedToken(cls_token_str, lstrip=False, rstrip=False)
+        pad_token = AddedToken(pad_token_str, lstrip=False, rstrip=False)
+        unk_token = AddedToken(unk_token_str, lstrip=False, rstrip=False)
 
-        mask_token = AddedToken("[MASK]", lstrip=True, rstrip=False)
+        mask_token = AddedToken(mask_token_str, lstrip=True, rstrip=False)
 
         super().__init__(
             bos_token=bos_token,
@@ -55,13 +63,13 @@ class CharacterTokenizer(PreTrainedTokenizer):
         )
 
         self._vocab_str_to_int = {
-            "[CLS]": 0,
-            "[SEP]": 1,
-            "[BOS]": 2,
-            "[MASK]": 3,
-            "[PAD]": 4,
-            "[RESERVED]": 5,
-            "[UNK]": 6,
+            cls_token_str: 0,
+            sep_token_str: 1,
+            bos_token_str: 2,
+            mask_token_str: 3,
+            pad_token_str: 4,
+            eos_token_str: 5,
+            unk_token_str: 6,
             **{ch: i + 7 for i, ch in enumerate(characters)},
         }
         self._vocab_int_to_str = {v: k for k, v in self._vocab_str_to_int.items()}
