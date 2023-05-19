@@ -40,6 +40,7 @@ class CharacterTokenizer(PreTrainedTokenizer):
         mask_token_str = u'\ue003'
         unk_token_str = u'\ue002'
         self.mask_token_str = mask_token_str
+        self.unk_token_str = unk_token_str
         bos_token = AddedToken(bos_token_str, lstrip=False, rstrip=False)
         eos_token = AddedToken(eos_token_str, lstrip=False, rstrip=False)
         sep_token = AddedToken(sep_token_str, lstrip=False, rstrip=False)
@@ -82,7 +83,7 @@ class CharacterTokenizer(PreTrainedTokenizer):
         return list(text)
 
     def _convert_token_to_id(self, token: str) -> int:
-        return self._vocab_str_to_int.get(token, self._vocab_str_to_int[unk_token_str])
+        return self._vocab_str_to_int.get(token, self._vocab_str_to_int[self.unk_token_str])
 
     def _convert_id_to_token(self, index: int) -> str:
         return self._vocab_int_to_str[index]
