@@ -30,7 +30,7 @@ class CharacterTokenizer(PreTrainedTokenizer):
 
             model_max_length (int): Model maximum sequence length.
         """
-                self.characters = characters
+        self.characters = characters
         self.model_max_length = model_max_length
         bos_token_str = u'\ue000'
         eos_token_str = u'\ue001'
